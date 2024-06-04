@@ -137,19 +137,22 @@ After writing this method, call it and pass in a Pokemon object of your choice f
 
 Solve Exercise 10 here:
 */
-// Define a function named catchPokemon that takes a Pokemon object as a parameter
-function catchPokemon(pokemonObj) {
-    // Add the passed Pokemon object to the game's party array
-    game.party.push(pokemonObj);
-}
+// Add the catchPokemon method to the existing game object
+game.catchPokemon = function(pokemonObj) {
+  // Add the passed Pokemon object to the game's party array
+  this.party.push(pokemonObj);
+};
 
 // Choose a Pokemon to catch (for demonstration, we choose the second Pokemon from the Pokemon array)
 const catchAPokemon = pokemon[1];
 
 // Call the catchPokemon function and pass the chosen Pokemon object as an argument
-catchPokemon(catchAPokemon);
+game.catchPokemon(catchAPokemon);
 
-console.log('Exercse 10 Result:',game.party)
+// Output the game's party array to the console
+console.log('Exercise 10 Result:', game.party);
+
+
 /*
 Exercise 11
 1. Copy the `catchPokemon` method that you just wrote above, and paste it below. Modify it so that it also decreases the number of pokeballs in your inventory each time you catch a Pokémon.
@@ -163,26 +166,27 @@ Also, log the `game.items` array to confirm that the pokeball quantity is being 
 Solve Exercise 11 here:
 */
 
-// Modified catchPokemon method to also decrease the number of pokeballs
-function catchPokemon(pokemonObj) {
-    // Add the passed Pokemon object to the game's party array
-    game.party.push(pokemonObj);
-    
-    // Find the index of the pokeball item in the game's items array
-    const pokeballIndex = game.items.findIndex(item => item.name === "pokeball");
-    
-    // If pokeball is found in the items array, decrease its quantity by 1
-    if (pokeballIndex !== -1) {
-        game.items[pokeballIndex].quantity--;
-    }
-}
+// Define the modified catchPokemon method
+game.catchPokemon = function(pokemonObj) {
+  // Add the passed Pokemon object to the game's party array
+  this.party.push(pokemonObj);
+  
+  // Find the index of the pokeball item in the game's items array
+  const pokeballIndex = this.items.findIndex(item => item.name === "pokeball");
+  
+  // If pokeball is found in the items array, decrease its quantity by 1
+  if (pokeballIndex !== -1) {
+      this.items[pokeballIndex].quantity--;
+  }
+};
 
 // Call the modified catchPokemon method and pass in a Pokemon object to catch it
 const pokemonToCatch = pokemon[2]; // Choose a Pokemon object from the `pokemon` data
-catchPokemon(pokemonToCatch);
+game.catchPokemon(pokemonToCatch);
 
 // Log the updated game items array to confirm that the pokeball quantity is being decremented
 console.log('Exercise 11 Result:', game.items);
+
 /*
 Exercise 12
 1. Similar to Exercise 6, now complete gyms with a difficulty below 6. How will you approach this?
@@ -224,27 +228,28 @@ For example, if five gym objects have a value of `true` on their `completed` pro
 
 Solve Exercise 13 here:
 */
-// Define the gymStatus function outside of the game object
-function gymStatus() {
-    // Initialize the tally object
-    const gymTally = { completed: 0, incomplete: 0 };
+// Add the gymStatus method to the existing game object
+game.gymStatus = function() {
+  // Initialize the tally object
+  const gymTally = { completed: 0, incomplete: 0 };
 
-    // Iterate through the gyms array
-    for (let gym of game.gyms) {
-        // Update the tally based on the completed property
-        if (gym.completed) {
-            gymTally.completed++;
-        } else {
-            gymTally.incomplete++;
-        }
-    }
+  // Iterate through the gyms array
+  for (let gym of this.gyms) {
+      // Update the tally based on the completed property
+      if (gym.completed) {
+          gymTally.completed++;
+      } else {
+          gymTally.incomplete++;
+      }
+  }
 
-    // Log the final tally
-    console.log('Exercise 13 Result:', gymTally);
-}
+  // Log the final tally
+  console.log('Exercise 13 Result:', gymTally);
+};
 
 // Call the gymStatus method to see the tally
-gymStatus();
+game.gymStatus();
+
 /*
 Exercise 14
 1. Add a `partyCount` method to `game` that counts the number of Pokémon in your party.
@@ -256,13 +261,15 @@ This method should:
 
 Solve Exercise 14 here:
 */
-function partyCount() {
-    // Return the length of the party array
-    return game.party.length;
-}
-
-const numberOfPokemonInParty = partyCount();
+// Add the partyCount method to the existing game object
+game.partyCount = function() {
+  // Return the length of the party array
+  return this.party.length;
+};
+// Call the partyCount method to get the number of Pokemon in the party
+const numberOfPokemonInParty = game.partyCount();
 console.log('Exercise 14 Result:', numberOfPokemonInParty);
+
 /*
 Exercise 15
 1. Now, complete gyms with a difficulty below 8. Reflect on how this is similar to or different from the previous gym exercises.
